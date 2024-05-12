@@ -2,13 +2,13 @@ import NavBar from "@components/NavBar/NavBar";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-const CustomerApp = () => {
+const StaffApp = () => {
   return (
     <>
-      <NavBar userType="customer" />
+      <NavBar userType="staff" />
       <Outlet />
     </>
   );
 };
 
-export default CustomerApp;
+export default StaffApp;

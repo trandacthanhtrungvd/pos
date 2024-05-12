@@ -1,3 +1,6 @@
+let drinkId = 7;
+let roomId = 6;
+
 let drinks = [
   { id: 1, name: "Americano", type: "coffee", price: 20000, description: "Mô tả đồ uống" },
   { id: 2, name: "Nước cam", type: "juice", price: 20000, description: "Mô tả đồ uống" },
@@ -72,4 +75,22 @@ export function getRooms() {
 
 export function getDrinks() {
   return drinks;
+}
+
+export function addDrink({name, type, price, description}) {
+  drinks.push({id: drinkId, name: name, type: type, price: price, description: description});
+  ++drinkId;
+}
+
+export function removeDrink(id) {
+  drinks = drinks.filter(drink => drink.id !== id);
+}
+
+export function addRoom({name, type, price, description}) {
+  rooms.push({id: roomId, name: name, type: type, price: price, description: description});
+  ++roomId;
+}
+
+export function removeRoom(id) {
+  rooms = rooms.filter(room => room.id !== id);
 }
