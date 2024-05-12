@@ -4,10 +4,10 @@ import { Outlet } from "react-router-dom";
 
 const BranchMgrApp = () => {
   return (
-    <>
+    <div className="container mx-auto">
       <NavBar userType="branchmgr" />
       <Outlet />
-    </>
+    </div>
   );
 };
 

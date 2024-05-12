@@ -4,10 +4,10 @@ import { Outlet } from "react-router-dom";
 
 const StaffApp = () => {
   return (
-    <>
+    <div className="container mx-auto">
       <NavBar userType="staff" />
       <Outlet />
-    </>
+    </div>
   );
 };
 
