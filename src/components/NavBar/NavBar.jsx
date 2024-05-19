@@ -8,6 +8,7 @@ const customerTabList = [
   { id: "rooms", title: "Phòng", destination: "rooms" },
   { id: "promos", title: "Khuyến mãi", destination: "promos" },
   { id: "branches", title: "Chi nhánh", destination: "branches" },
+  { id: "cart", title: "Giỏ hàng", destination: "cart" },
 ];
 
 const staffTabList = [
@@ -18,7 +19,7 @@ const staffTabList = [
 
 const branchmgrTabList = [
   { id: "dashboard", title: "Doanh thu", destination: "dashboard" },
-  { id: "staffs", title: "Quản lý nhân viên", destination: "staffs" },
+  { id: "staff", title: "Quản lý nhân viên", destination: "staff" },
   { id: "drinks", title: "Quản lý thực đơn", destination: "drinks" },
   { id: "rooms", title: "Quản lý phòng", destination: "rooms" },
 ];
@@ -70,7 +71,7 @@ const NavBar = ({ userType = "customer" }) => {
               </span>
             </Dropdown.Header>
             <Dropdown.Divider />
-            <Dropdown.Item>Đăng xuất</Dropdown.Item>
+            <Dropdown.Item as={NavLink} to={"/"}>Đăng xuất</Dropdown.Item>
           </Dropdown>
         </div>
         <Navbar.Collapse>
