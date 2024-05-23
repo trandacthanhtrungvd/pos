@@ -1,6 +1,6 @@
 import RoomCard from "@components/Card/RoomCard";
 import React, { useState } from "react";
-import { getRooms } from "../../../api";
+import { getRooms } from "@/api";
 const Rooms = () => {
   const rooms = getRooms();
   const [query, setQuery] = useState("");

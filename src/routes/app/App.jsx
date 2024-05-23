@@ -15,6 +15,8 @@ import {
 import {
   BranchDashboard,
   DrinksSettings,
+  EditDrink,
+  EditRoom,
   RoomsSettings,
   StaffSettings,
 } from "@routes/branchmgr";
@@ -45,7 +47,9 @@ const App = () => {
           <Route path="dashboard" element={<BranchDashboard />}></Route>
           <Route path="staff" element={<StaffSettings />}></Route>
           <Route path="drinks" element={<DrinksSettings />}></Route>
+          <Route path="drinks/:drinkId" element={<EditDrink />}></Route>
           <Route path="rooms" element={<RoomsSettings />}></Route>
+          <Route path="rooms/:roomId" element={<EditRoom />}></Route>
         </Route>
         <Route path="manager" element={<ManagerApp />}>
           <Route path="dashboard" element={<Dashboard />}></Route>

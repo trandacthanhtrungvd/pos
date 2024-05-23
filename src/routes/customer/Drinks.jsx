@@ -1,29 +1,18 @@
 import DrinkCard from "@components/Card/DrinkCard";
-import React, { useState } from "react";
-import { getDrinks } from "../../../api";
+import { MenuContext } from "@context/MenuContext";
+import React, { useContext, useState } from "react";
 
 const Drinks = () => {
-  const drinks = getDrinks();
+  const menuData = useContext(MenuContext);
+  const { drinks } = menuData;
   const [query, setQuery] = useState("");
-  const [selectedType, setSelectedType] = useState("");
   const handleSearchQuery = (event) => {
     setQuery(event.target.value);
-  };
-
-  const handleTypeSelect = (event) => {
-    console.log(event.target.value);
-    setSelectedType(event.target.value);
   };
 
   const filteredItems = drinks.filter(
     (drink) => drink.name.toLowerCase().indexOf(query.toLowerCase()) !== -1,
   );
-
-  const result = filteredItems.filter((drink) => {
-    if (selectedType === "" || selectedType === drink.type) {
-      return drink;
-    }
-  });
 
   console.log(drinks);
   return (
@@ -33,24 +22,13 @@ const Drinks = () => {
         <input
           className="rounded-lg border-gray-400"
           type="text"
-          placeholder="Tìm phòng"
+          placeholder="Tìm món"
           onChange={handleSearchQuery}
         />
-        <select
-          className="rounded-lg border-gray-400"
-          name="type"
-          id="type"
-          onChange={handleTypeSelect}
-        >
-          <option value="">-- Chọn loại đồ uống --</option>
-          <option value="coffee">Coffee</option>
-          <option value="juice">Juice</option>
-          <option value="softdrink">Nước ngọt</option>
-        </select>
       </div>
       {/* Rooms */}
       <div className="flex flex-[4] flex-wrap gap-4">
-        {result.map((drink) => (
+        {filteredItems.map((drink) => (
           <DrinkCard
             id={drink.id}
             key={drink.id}
