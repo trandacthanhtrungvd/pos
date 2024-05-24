@@ -4,7 +4,7 @@ const OrderContext = createContext();
 
 function OrderProvider({ children }) {
   const [orderedDrinks, setOrderedDrinks] = useState([]);
-  const [orderedRoom, setOrderedRoom] = useState({});
+  const [orderedRoom, setOrderedRoom] = useState(null);
 
   return (
     <OrderContext.Provider value={{ orderedDrinks, setOrderedDrinks, orderedRoom, setOrderedRoom }}>

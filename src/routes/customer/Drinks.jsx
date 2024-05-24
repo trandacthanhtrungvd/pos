@@ -5,6 +5,7 @@ import React, { useContext, useState } from "react";
 const Drinks = () => {
   const menuData = useContext(MenuContext);
   const { drinks } = menuData;
+  
   const [query, setQuery] = useState("");
   const handleSearchQuery = (event) => {
     setQuery(event.target.value);

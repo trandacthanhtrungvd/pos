@@ -31,7 +31,9 @@ function MenuProvider({ children }) {
       .then((res) => {
         setRooms(res.data.data.map(room => ({
           id: room.Room_ID,
-          
+          status: room.Status,
+          type: room.Room_type_ID,
+          price: room.Cost
         })));
         console.log(res.data);
       })

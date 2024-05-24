@@ -1,20 +1,26 @@
 import { Card } from "flowbite-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const RoomCard = ({ id, name }) => {
+const RoomCard = ({ id, type }) => {
+  const [typeText, setTypeText] = useState("");
+  useEffect(() => {
+    if (type == "1") {
+      setTypeText("Phòng nhỏ");
+    } else if (type == "2") {
+      setTypeText("Phòng vừa");
+    } else if (type == "3") {
+      setTypeText("Phòng lớn");
+    }
+  }, []);
+
   return (
     <Card className="max-w-sm" imgSrc="/img/rooms/1.jpg" imgAlt="Room Image">
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        {name}
+        Phòng {id}
       </h5>
       <div className="font-normal text-gray-700 dark:text-gray-400">
-        <strong>Mô tả</strong>
-        <ul>
-          <li>- Máy lạnh</li>
-          <li>- Máy chiếu</li>
-          <li>- ...</li>
-        </ul>
+        {typeText}
       </div>
       <NavLink
         to={`${id}`}

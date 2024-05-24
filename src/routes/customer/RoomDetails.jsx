@@ -1,24 +1,27 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
-import { getRooms } from "@/api";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Datepicker, Select } from "flowbite-react";
 import { HiShoppingCart } from "react-icons/hi";
 import { OrderContext } from "@context/OrderContext";
+import { MenuContext } from "@context/MenuContext";
 
 const RoomDetails = () => {
-  const { setOrderedRoom  } = useContext(OrderContext);
+  const navigate = useNavigate();
+
+  const menuData = useContext(MenuContext);
+  const { rooms } = menuData;
+
+  const { setOrderedRoom } = useContext(OrderContext);
   const { roomId } = useParams();
-  const rooms = getRooms();
   const room = rooms.find((room) => room.id == roomId);
 
-  console.log(setOrderedRoom);
-
-  const handleSelectRoom = (e) => {
-    e.preventDefault();
+  const handleSelectRoom = () => {
     setOrderedRoom({
       id: roomId,
-      
+      type: room.type,
+      price: room.price,
     });
+    navigate("/customer/rooms");
   };
 
   return (
@@ -27,7 +30,7 @@ const RoomDetails = () => {
         <img src="/img/rooms/1.jpg" alt="Room Image" className="rounded-lg" />
         <div className="flex flex-col gap-4">
           <div>
-            <div className="text-4xl font-semibold">{room.name}</div>
+            <div className="mb-2 text-3xl font-semibold">Phòng {room.id}</div>
             <div className="text-xl font-semibold text-blue-500">
               {room.price} VND/h
             </div>
@@ -53,8 +56,14 @@ const RoomDetails = () => {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="text-2xl font-semibold">Mô tả</div>
-        <div>Mô tả phòng các thứ</div>
+        <div className="text-2xl font-semibold">Thiết bị</div>
+        <div>
+          <ul>
+            <li>Thiết bị 1</li>
+            <li>Thiết bị 2</li>
+            <li>Thiết bị 3</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
