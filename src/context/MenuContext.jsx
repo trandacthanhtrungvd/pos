@@ -35,7 +35,6 @@ function MenuProvider({ children }) {
           type: room.Room_type_ID,
           price: room.Cost
         })));
-        console.log(res.data);
       })
       .catch((error) => console.log(error));
   }, []);

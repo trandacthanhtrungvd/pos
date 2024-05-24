@@ -1,22 +1,66 @@
-import { Button } from "flowbite-react";
-import React from "react";
+import { AuthContext } from "@context/AuthContext";
+import { Button, Label, TextInput } from "flowbite-react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const LoginPage = () => {
+  const authData = useContext(AuthContext);
+  const { login, errorMsg } = authData;
+
+  const [loginData, setLoginData] = useState({
+    username: "",
+    password: "",
+  });
+
   return (
-    <div className="mx-auto my-auto flex h-dvh max-w-fit flex-col justify-center gap-8">
-      <Button as={NavLink} to="customer">
-        Customer
-      </Button>
-      <Button as={NavLink} to="staff">
-        Staff
-      </Button>
-      <Button as={NavLink} to="branchmgr">
-        Branch Manager
-      </Button>
-      <Button as={NavLink} to="manager">
-        Manager
-      </Button>
+    <div className="mx-auto my-auto flex h-dvh max-w-md flex-col justify-center gap-4">
+      <div>
+        <div className="mb-2 block">
+          <Label htmlFor="username" value="Tên đăng nhập" />
+        </div>
+        <TextInput
+          id="username"
+          type="text"
+          placeholder="Tên đăng nhập"
+          required
+          onChange={(event) => {
+            setLoginData((prev) => ({
+              ...prev,
+              username: event.target.value,
+            }));
+          }}
+        />
+      </div>
+      <div>
+        <div className="mb-2 block">
+          <Label htmlFor="password" value="Mật khẩu" />
+        </div>
+        <TextInput
+          id="password"
+          type="password"
+          placeholder="Mật khẩu"
+          required
+          onChange={(event) => {
+            setLoginData((prev) => ({
+              ...prev,
+              password: event.target.value,
+            }));
+          }}
+        />
+      </div>
+      <div className="flex items-center gap-2 font-semibold text-red-500">
+        {errorMsg}
+      </div>
+      <div className="flex items-baseline justify-between">
+        <Button
+          onClick={() => {
+            login(loginData.username, loginData.password);
+          }}
+        >
+          Đăng nhập
+        </Button>
+        <NavLink className="text-blue-500 font-semibold" to={"/register"}>Đăng ký</NavLink>
+      </div>
     </div>
   );
 };
