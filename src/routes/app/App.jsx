@@ -12,6 +12,7 @@ import {
   DrinkDetails,
   RoomDetails,
   Cart,
+  History,
 } from "@routes/customer";
 import {
   BranchDashboard,
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="promos" element={<Promos />}></Route>
           <Route path="branches" element={<Branches />}></Route>
           <Route path="cart" element={<Cart />}></Route>
+          <Route path="history" element={<History />}></Route>
         </Route>
         <Route path="staff" element={<StaffApp />}>
           <Route path="rooms" element={<RoomStatus />}></Route>

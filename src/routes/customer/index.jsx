@@ -7,3 +7,4 @@ export { default as Promos } from "./Promos";
 export { default as Rooms } from "./Rooms";
 export { default as RoomDetails } from "./RoomDetails";
 export { default as Cart } from "./Cart";
+export { default as History } from "./History";

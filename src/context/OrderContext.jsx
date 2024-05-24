@@ -1,15 +1,27 @@
 import { AuthContext } from "@context/AuthContext";
 import axios from "axios";
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 
 const OrderContext = createContext();
 
 function OrderProvider({ children }) {
   const [orderedDrinks, setOrderedDrinks] = useState([]);
   const [orderedRoom, setOrderedRoom] = useState(null);
+  const [bills, setBills] = useState([]);
 
   const authData = useContext(AuthContext);
   const { user } = authData;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/bill", {
+        headers: {
+          Authorization: "Bearer " + user.accessToken,
+        },
+      })
+      .then((res) => setBills(res.data.data))
+      .catch((err) => console.error(err));
+  });
 
   const createBill = (total) => {
     const data = {
@@ -26,7 +38,7 @@ function OrderProvider({ children }) {
     console.log(user.accessToken);
     axios
       .post("http://localhost:8080/bill/createBill", data, {
-        headers: { Authorization: user.accessToken },
+        headers: { Authorization: "Bearer " + user.accessToken },
       })
       .then(() => {
         setOrderedDrinks([]);
@@ -43,6 +55,7 @@ function OrderProvider({ children }) {
         orderedRoom,
         setOrderedRoom,
         createBill,
+        bills,
       }}
     >
       {children}

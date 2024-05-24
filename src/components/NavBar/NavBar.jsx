@@ -9,6 +9,7 @@ const customerTabList = [
   { id: "promos", title: "Khuyến mãi", destination: "promos" },
   { id: "branches", title: "Chi nhánh", destination: "branches" },
   { id: "cart", title: "Giỏ hàng", destination: "cart" },
+  { id: "history", title: "Lịch sử", destination: "history" },
 ];
 
 const staffTabList = [
@@ -71,7 +72,9 @@ const NavBar = ({ userType = "customer" }) => {
               </span>
             </Dropdown.Header>
             <Dropdown.Divider />
-            <Dropdown.Item as={NavLink} to={"/"}>Đăng xuất</Dropdown.Item>
+            <Dropdown.Item as={NavLink} to={"/"}>
+              Đăng xuất
+            </Dropdown.Item>
           </Dropdown>
         </div>
         <Navbar.Collapse>
