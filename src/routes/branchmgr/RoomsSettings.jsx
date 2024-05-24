@@ -1,20 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Label, Modal, Select, Table, TextInput } from "flowbite-react";
-import { addRoom, getRooms, removeRoom } from "@/api";
 import { NavLink } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { MenuContext } from "@context/MenuContext";
+import axios from "axios";
 
 const RoomsSettings = () => {
-  const [rooms, setRooms] = useState(getRooms());
+  const menuData = useContext(MenuContext);
+  const { rooms, setRooms } = menuData;
+
   const [query, setQuery] = useState("");
   const [openAddModal, setOpenAddModel] = useState(false);
   const [openDelModal, setOpenDelModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
+  const typeText = {
+    0: "Chung",
+    1: "Nhỏ",
+    2: "Vừa",
+    3: "Lớn",
+  };
+
   const [addData, setAddData] = useState({
-    name: "",
+    id: "",
     type: "",
-    price: "",
   });
 
   const handleSearchQuery = (event) => {
@@ -22,29 +31,41 @@ const RoomsSettings = () => {
   };
 
   const result = rooms.filter(
-    (room) => room.name.toLowerCase().indexOf(query.toLowerCase()) !== -1,
+    (room) => room.id.toLowerCase().indexOf(query.toLowerCase()) !== -1,
   );
 
   const handleAddRoom = () => {
-    // TODO: API call to add a room
-
-    addRoom(addData.name, addData.type, addData.price);
-    setRooms(getRooms());
-    console.log(addData);
-    setOpenAddModel(false);
+    axios
+      .post(
+        "http://localhost:8080/room/createRoom",
+        {
+          Room_ID: addData.id,
+          Status: "A",
+          Room_type_ID: addData.type,
+        },
+        { headers: { "Content-Type": "application/json" } },
+      )
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        if (error.response.data.message.message.includes("Duplicate entry")) {
+          alert("Số phòng đã tồn tại");
+        }
+      });
   };
 
   const handleDeleteRoom = () => {
-    // TODO: API call to delete a room
-
-    removeRoom(deleteId);
-    setRooms(getRooms());
-    console.log(deleteId);
-    setOpenDelModal(false);
+    axios
+      .delete(`http://localhost:8080/room/deleteRoom/${deleteId}`)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleCloseAddModel = () => {
-    setAddData({ name: "", type: "", price: "" });
+    setAddData({ id: "", type: "" });
     setOpenAddModel(false);
   };
 
@@ -60,9 +81,9 @@ const RoomsSettings = () => {
           <input
             className="rounded-lg border-gray-400"
             placeholder="Tìm phòng"
-            type="text"
-            name="name"
-            id="name"
+            type="number"
+            name="roomId"
+            id="roomId"
             onChange={handleSearchQuery}
           />
           <Button
@@ -87,15 +108,14 @@ const RoomsSettings = () => {
             {result.map((room) => (
               <>
                 <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>{room.name}</Table.Cell>
-                  <Table.Cell>{room.type}</Table.Cell>
+                  <Table.Cell>Phòng {room.id}</Table.Cell>
+                  <Table.Cell>{typeText[room.type]}</Table.Cell>
                   <Table.Cell>{room.price}</Table.Cell>
                   <Table.Cell>
                     <div className="flex gap-4">
                       <Button as={NavLink} to={`${room.id}`} color="blue">
                         Chỉnh sửa
                       </Button>
-                      {/* TODO: Handle delete button */}
                       <Button
                         color="failure"
                         onClick={() => {
@@ -119,17 +139,17 @@ const RoomsSettings = () => {
         <Modal.Header className="m-2">Nhập thông tin phòng</Modal.Header>
         <Modal.Body>
           <div className="mb-2">
-            <Label htmlFor="name" value="Tên phòng" />
+            <Label htmlFor="roomId" value="Số phòng" />
           </div>
           <TextInput
-            id="name"
+            id="roomId"
             type="text"
             sizing="md"
-            placeholder="Nhập tên phòng"
+            placeholder="Nhập số phòng"
             onChange={(event) => {
               setAddData((prev) => ({
-                name: event.target.value,
                 ...prev,
+                id: event.target.value,
               }));
             }}
           />
@@ -139,22 +159,14 @@ const RoomsSettings = () => {
           <Select
             id="type"
             onChange={(event) => {
-              setAddData((prev) => ({ type: event.target.value, ...prev }));
+              setAddData((prev) => ({ ...prev, type: event.target.value }));
             }}
           >
-            <option>coffee</option>
-            <option>juice</option>
-            <option>softroom</option>
+            <option value="0">Chung</option>
+            <option value="1">Nhỏ</option>
+            <option value="2">Vừa</option>
+            <option value="3">Lớn</option>
           </Select>
-          <div className="mb-2">
-            <Label htmlFor="price" value="Giá" />
-          </div>
-          <TextInput
-            id="price"
-            type="number"
-            sizing="md"
-            placeholder="Nhập giá phòng"
-          />
           <Button className="mt-4" onClick={handleAddRoom}>
             Thêm phòng
           </Button>

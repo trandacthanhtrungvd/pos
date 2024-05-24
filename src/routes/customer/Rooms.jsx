@@ -1,8 +1,10 @@
 import RoomCard from "@components/Card/RoomCard";
-import React, { useState } from "react";
-import { getRooms } from "@/api";
+import React, { useContext, useState } from "react";
+import { MenuContext } from "@context/MenuContext";
+
 const Rooms = () => {
-  const rooms = getRooms();
+  const menuData = useContext(MenuContext);
+  const { rooms } = menuData;
   const [query, setQuery] = useState("");
   const [selectedType, setSelectedType] = useState("0");
   const handleSearchQuery = (event) => {
@@ -15,7 +17,7 @@ const Rooms = () => {
   };
 
   const filteredItems = rooms.filter(
-    (room) => room.name.toLowerCase().indexOf(query.toLowerCase()) !== -1,
+    (room) => room.id.toLowerCase().indexOf(query.toLowerCase()) !== -1,
   );
 
   const result = filteredItems.filter((room) => {
@@ -41,14 +43,15 @@ const Rooms = () => {
           onChange={handleTypeSelect}
         >
           <option value="0">-- Chọn loại phòng --</option>
-          <option value="1">Phòng loại 1</option>
-          <option value="2">Phòng loại 2</option>
+          <option value="1">Nhỏ</option>
+          <option value="2">Vừa</option>
+          <option value="3">Lớn</option>
         </select>
       </div>
       {/* Rooms */}
       <div className="flex flex-[4] flex-wrap gap-4">
         {result.map((room) => (
-          <RoomCard key={room.id} id={room.id} name={room.name} />
+          <RoomCard key={room.id} id={room.id} type={room.type} />
         ))}
       </div>
     </div>

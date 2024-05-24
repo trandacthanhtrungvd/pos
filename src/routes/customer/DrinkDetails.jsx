@@ -1,19 +1,21 @@
 import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getDrinks } from "@/api";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "flowbite-react";
 import { HiShoppingCart } from "react-icons/hi";
 import { OrderContext } from "@context/OrderContext";
+import { MenuContext } from "@context/MenuContext";
 
 const DrinkDetails = () => {
+  const navigate = useNavigate();
+  const menuData = useContext(MenuContext);
+  const { drinks } = menuData;
+
   const { drinkId } = useParams();
-  const drinks = getDrinks();
   const drink = drinks.find((drink) => drink.id == drinkId);
 
   const { orderedDrinks, setOrderedDrinks } = useContext(OrderContext);
   const [amount, setAmount] = useState(1);
 
-  console.log(amount);
   console.log(orderedDrinks);
 
   return (
@@ -65,6 +67,7 @@ const DrinkDetails = () => {
 
                 return curr;
               });
+              navigate("/customer/drinks");
             }}
           >
             <HiShoppingCart className="mr-2 h-5 w-5" />
