@@ -1,12 +1,32 @@
 import { OrderContext } from "@context/OrderContext";
 import { Button, Table } from "flowbite-react";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const Cart = () => {
   const orderData = useContext(OrderContext);
-  const { orderedDrinks, setOrderedDrinks, orderedRoom, setOrderedRoom } =
-    orderData;
+  const {
+    orderedDrinks,
+    setOrderedDrinks,
+    orderedRoom,
+    setOrderedRoom,
+    createBill,
+  } = orderData;
 
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    let totalDrink = 0;
+    if (orderedDrinks.length > 0) {
+      orderedDrinks.forEach((drink) => {
+        totalDrink += drink.price * drink.amount;
+      });
+    }
+    if (orderedRoom !== null) {
+      setTotal(totalDrink + orderedRoom.price);
+    } else {
+      setTotal(totalDrink);
+    }
+  }, [orderedDrinks, orderedRoom]);
   const OrderedRoomCard =
     orderedRoom === null ? (
       <></>
@@ -27,9 +47,7 @@ const Cart = () => {
       </div>
     );
 
-  const handleCheckout = () => {
-
-  }
+  console.log(total);
 
   return (
     <div className="mx-auto flex w-1/2 flex-col py-4">
@@ -89,8 +107,19 @@ const Cart = () => {
         <div className="mt-4 text-xl font-semibold">Phòng đã đặt</div>
         {OrderedRoomCard}
       </div>
+      <div className="mt-4 flex justify-between">
+        <div className="font-semibold">Tổng hoá đơn</div>
+        <div className="font-semibold">{total}</div>
+      </div>
       <div className="mt-4">
-        <Button onClick={handleCheckout} disabled={orderedDrinks.length === 0 || orderedRoom === null}>Thanh toán</Button>
+        <Button
+          onClick={() => {
+            createBill(total);
+          }}
+          disabled={orderedDrinks.length === 0 || orderedRoom === null}
+        >
+          Thanh toán
+        </Button>
       </div>
     </div>
   );
