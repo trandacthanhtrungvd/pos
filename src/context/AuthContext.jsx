@@ -14,7 +14,8 @@ const AuthProvider = ({ children }) => {
     accessToken: "",
   });
 
-  const [errorMsg, setErrorMsg] = useState("");
+  const [loginError, setloginError] = useState("");
+  const [registerError, setRegisterError] = useState("");
 
   const login = (user_id, password) => {
     axios
@@ -30,7 +31,7 @@ const AuthProvider = ({ children }) => {
           role: u.Role,
           accessToken: response.data.data.accessToken,
         });
-
+        setloginError("");
         if (u.Role === "Customer") {
           navigate("/customer");
         } else if (u.Role === "Manager") {
@@ -38,7 +39,34 @@ const AuthProvider = ({ children }) => {
         }
       })
       .catch((error) => {
-        setErrorMsg(error.response.data.message);
+        setloginError(error.response.data.message);
+      });
+  };
+
+  const register = (userid, password, username, phone, email) => {
+    const data = {
+      account: {
+        User_ID: userid,
+        Password: password,
+        Username: username,
+        Avatar: "",
+      },
+      userInfo: {
+        Fname: "",
+        Lname: "",
+        Phone: phone,
+        Email: email,
+      },
+    };
+    axios
+      .post("http://localhost:8080/auth/register", data, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        setRegisterError(error.response.data.message);
       });
   };
 
@@ -51,7 +79,17 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, logout, errorMsg }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        login,
+        logout,
+        register,
+        loginError,
+        registerError,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

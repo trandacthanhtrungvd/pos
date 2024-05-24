@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const LoginPage = () => {
   const authData = useContext(AuthContext);
-  const { login, errorMsg } = authData;
+  const { login, loginError } = authData;
 
   const [loginData, setLoginData] = useState({
     username: "",
@@ -49,7 +49,7 @@ const LoginPage = () => {
         />
       </div>
       <div className="flex items-center gap-2 font-semibold text-red-500">
-        {errorMsg}
+        {loginError}
       </div>
       <div className="flex items-baseline justify-between">
         <Button
@@ -59,7 +59,9 @@ const LoginPage = () => {
         >
           Đăng nhập
         </Button>
-        <NavLink className="text-blue-500 font-semibold" to={"/register"}>Đăng ký</NavLink>
+        <NavLink className="font-semibold text-blue-500" to={"/register"}>
+          Đăng ký
+        </NavLink>
       </div>
     </div>
   );

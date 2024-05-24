@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "@routes/login/LoginPage";
+import RegisterPage from "@routes/login/RegisterPage";
 import { CustomerApp, StaffApp, BranchMgrApp, ManagerApp } from "./index";
 import {
   Home,
@@ -29,6 +30,7 @@ const App = () => {
     <div>
       <Routes>
         <Route path="/" element={<LoginPage />}></Route>
+        <Route path="register" element={<RegisterPage />}></Route>
         <Route path="customer" element={<CustomerApp />}>
           <Route index element={<Home />}></Route>
           <Route path="drinks" element={<Drinks />}></Route>
