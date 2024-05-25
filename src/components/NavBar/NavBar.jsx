@@ -23,6 +23,7 @@ const branchmgrTabList = [
   { id: "staff", title: "Quản lý nhân viên", destination: "staff" },
   { id: "drinks", title: "Quản lý thực đơn", destination: "drinks" },
   { id: "rooms", title: "Quản lý phòng", destination: "rooms" },
+  { id: "history", title: "Lịch sử", destination: "history" },
 ];
 
 const managerTabList = [

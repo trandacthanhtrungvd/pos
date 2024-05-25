@@ -4,3 +4,4 @@ export { default as RoomsSettings } from "./RoomsSettings";
 export { default as StaffSettings } from "./StaffSettings";
 export { default as EditDrink } from "./EditDrink";
 export { default as EditRoom } from "./EditRoom";
+export { default as HistoryMgr } from "./HistoryMgr";

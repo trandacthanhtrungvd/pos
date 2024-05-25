@@ -19,6 +19,7 @@ import {
   DrinksSettings,
   EditDrink,
   EditRoom,
+  HistoryMgr,
   RoomsSettings,
   StaffSettings,
 } from "@routes/branchmgr";
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="drinks/:drinkId" element={<EditDrink />}></Route>
           <Route path="rooms" element={<RoomsSettings />}></Route>
           <Route path="rooms/:roomId" element={<EditRoom />}></Route>
+          <Route path="history" element={<HistoryMgr />}></Route>
         </Route>
         <Route path="manager" element={<ManagerApp />}>
           <Route path="dashboard" element={<Dashboard />}></Route>
